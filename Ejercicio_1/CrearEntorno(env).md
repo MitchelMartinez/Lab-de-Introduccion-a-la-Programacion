@@ -30,8 +30,8 @@ La terminal integrada se abrirá directamente en la carpeta del proyecto.
 El entorno virtual se crea utilizando el módulo `venv` que viene incluido con Python.
 
 ```python
-# python -m venv env
-````
+python -m venv env
+```
 ---
 ## 4. Activar el entorno virtual
 Para activar el entorno virtual en la terminal de visual studio usar el siguiente comando
