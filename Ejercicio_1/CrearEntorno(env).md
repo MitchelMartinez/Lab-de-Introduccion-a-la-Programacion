@@ -34,5 +34,42 @@ El entorno virtual se crea utilizando el módulo `venv` que viene incluido con P
 ````
 ---
 ## 4. Activar el entorno virtual
-Para activar el entorno virtual en la terminal de visual studio
+Para activar el entorno virtual en la terminal de visual studio usar el siguiente comando
+```python
+env\Scripts\activate
+```
+### En caso de que de error por permisos deshabilitados
+Usar el sigueinte comando una sola vez en la misma terminal
+```python
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+Cuando el entorno se activa correctamente, la terminal mostrará lo siguiente:
+`(env)`
+
+---
+## 5. Seleccionar el intérprete de Python en Visual Studio Code
+
+Para asegurarse de que VS Code use el Python del entorno virtual:
+
+Presionar `Ctrl + Shift + P`
+
+Escribir Python: Select Interpreter
+
+Seleccionar el intérprete que incluya `(env)`
+
+Esto garantiza que el editor use el entorno virtual para ejecutar el código.
+
+---
+# Instalar una librería dentro del entorno virtual
+Con el entorno virtual activo, se pueden instalar librerías usando `pip`
+Ejemplo: instalación de la librería NumPy
+```python
+pip install numpy
+```
+---
+## Importar la librería en un archivo Python
+Después de instalar la librería, se puede utilizar dentro de un archivo `.py`
+```python
+import numpy
+```
 
