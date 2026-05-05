@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scanner</title>
+
+<script src="https://unpkg.com/@zxing/library@latest"></script>
+
+<style>
+body {
+    background: #111;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+h2 {
+    margin: 10px;
+}
+
+/* CONTENEDOR CONTROLADO */
+#scanner-box {
+    width: 320px;
+    height: 240px;
+    margin: auto;
+    position: relative;
+    border: 3px solid #00ffcc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* VIDEO AJUSTADO */
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CUADRO DE ESCANEO */
+#overlay {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    border: 3px solid red;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* BOTONES */
+button {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #00ffcc;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>📷 Escáner</h2>
+
+<div id="scanner-box">
+    <video id="video"></video>
+    <div id="overlay"></div>
+</div>
+
+<br>
+
+<button onclick="iniciar()">▶ Iniciar</button>
+<button onclick="detener()">⏹ Detener</button>
+
+<audio id="beep" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
+<script>
+let codeReader;
+let scanning = false;
+let ultimoCodigo = null;
+let bloqueo = false;
+
+function iniciar() {
+    if (scanning) return;
+
+    codeReader = new ZXing.BrowserMultiFormatReader();
+    scanning = true;
+
+    codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
+        if (result) {
+            let codigo = result.text;
+
+            if (bloqueo || codigo === ultimoCodigo) return;
+
+            bloqueo = true;
+            ultimoCodigo = codigo;
+
+            document.getElementById("beep").play();
+
+            fetch('/guardar', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({codigo})
+            });
+
+            setTimeout(() => bloqueo = false, 1000);
+        }
+    });
+}
+
+function detener() {
+    if (codeReader) {
+        codeReader.reset();
+        scanning = false;
+    }
+}
+</script>
+
+</body>
+</html>

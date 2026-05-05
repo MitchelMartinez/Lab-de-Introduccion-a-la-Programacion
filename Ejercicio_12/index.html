@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Caja Walmart POS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="logo">CajaWalmart</div>
+</header>
+
+<main class="container">
+
+<section class="left-panel">
+    <div class="scan-box">
+        <h3>Escanear producto</h3>
+
+        <div class="scan-actions">
+            <input id="codigoManual" type="text">
+            <button id="abrirScanner">Abrir escáner</button>
+        </div>
+    </div>
+
+    <div class="table-box">
+        <h3>Lista</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tablaProductos"></tbody>
+        </table>
+    </div>
+</section>
+
+<aside class="right-panel">
+    <button onclick="limpiarLista()">Limpiar</button>
+</aside>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
